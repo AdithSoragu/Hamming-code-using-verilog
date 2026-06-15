@@ -1,1 +1,48 @@
+`timescale 1ns / 1ps
 
+module tb_hamming_main;
+
+
+    // Inputs to the UUT (Unit Under Test)
+    reg [7:0] mess;
+
+    // Outputs from the UUT
+    wire [11:0] out;
+
+    // Instantiate the Unit Under Test (UUT)
+    hamming_main uut (
+        .mess(mess),
+        .out(out)
+    );
+
+    initial begin
+        // Display header for console output
+        $display("--------------------------------------------");
+        $display("Input (8-bit) -> Encoded Output (12-bit)");
+        $display("--------------------------------------------");
+
+        // Test Case 1: All zeros
+        mess = 8'b0000_0000;
+        #10; // Wait 10ns for combinational logic
+        $display("In: %b -> Out: %b", mess, out);
+
+        // Test Case 2: Standard message (e.g., 8'b10110010)
+        mess = 8'b1011_0010;
+        #10;
+        $display("In: %b -> Out: %b", mess, out);
+
+        // Test Case 3: Another common pattern (e.g., 8'b1111_1111)
+        mess = 8'b1111_1111;
+        #10;
+        $display("In: %b -> Out: %b", mess, out);
+
+        // Test Case 4: Single bit set
+        mess = 8'b0000_0001;
+        #10;
+        $display("In: %b -> Out: %b", mess, out);
+
+        $display("--------------------------------------------");
+        $finish; // End simulation
+    end
+
+endmodule
